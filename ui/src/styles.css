@@ -1,0 +1,201 @@
+@import "./tokens.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root { height: 100%; }
+html { font-feature-settings: "ss01", "ss02", "cv11"; }
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body, 14px);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--hairline-strong);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--ink-mute); }
+
+/* Background decoration — toggleable via body[data-decor] / body[data-grid] */
+.bg-deco {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    radial-gradient(60% 80% at 12% 0%,  color-mix(in oklab, var(--acc) 18%, transparent), transparent 55%),
+    radial-gradient(40% 60% at 92% 0%,  color-mix(in oklab, var(--acc-3) 14%, transparent), transparent 60%);
+  opacity: 0.9;
+  transition: opacity var(--transition-med);
+}
+body[data-decor="off"] .bg-deco { opacity: 0; }
+.bg-grid {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, transparent 0, #000 220px, #000 calc(100% - 200px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 220px, #000 calc(100% - 200px), transparent 100%);
+  transition: opacity var(--transition-med);
+}
+body[data-grid="off"] .bg-grid { opacity: 0; }
+
+/* Typography helpers */
+.eyebrow,
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.mono { font-family: var(--font-mono); font-feature-settings: "calt" 0; }
+.tnum { font-variant-numeric: tabular-nums; }
+.display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+/* Card — driven by tweak-able vars */
+.card {
+  background: var(--bg-card);
+  border: 0.5px solid var(--hairline);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* Border tweak: none / hairline / strong */
+body[data-borders="none"]   .card { border-color: transparent; }
+body[data-borders="strong"] .card { border-color: var(--hairline-strong); }
+
+/* Elevation tweak */
+body[data-elev="flat"]   .card { box-shadow: none; }
+body[data-elev="strong"] .card { box-shadow: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 24px 60px -20px rgb(0 0 0 / 0.6); }
+
+/* Hero KPI gradient toggle */
+body[data-hero-gradient="off"] .kpi-hero {
+  background-image: none !important;
+  background: var(--bg-card) !important;
+  color: var(--ink) !important;
+  border-color: var(--hairline) !important;
+}
+
+/* Zebra rows for tables */
+body[data-zebra="on"] .ses-row:nth-child(even) { background: var(--row-stripe); }
+
+/* Grain noise overlay */
+.bg-grain {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: var(--grain, 0);
+  mix-blend-mode: overlay;
+}
+.card-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px var(--pad-card, 22px) 0;
+}
+.card-body {
+  padding: 14px var(--pad-card, 22px) var(--pad-card, 22px);
+}
+
+/* Hairlines exactly 0.5px */
+.hairline    { border: 0.5px solid var(--hairline); }
+.hairline-b  { border-bottom: 0.5px solid var(--hairline); }
+.hairline-t  { border-top: 0.5px solid var(--hairline); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 14px;
+  font-size: 12.5px; font-weight: 500;
+  border-radius: var(--radius-btn);
+  border: 0.5px solid transparent;
+  transition: filter var(--transition-fast), transform var(--transition-fast), background var(--transition-fast);
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--ink);
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn:not(:disabled):hover { filter: brightness(1.06); }
+.btn:not(:disabled):active { transform: translateY(1px); }
+.btn.primary {
+  background: var(--acc);
+  color: var(--hero-ink);
+  border-color: color-mix(in oklab, var(--acc) 70%, black);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.18) inset, 0 4px 14px var(--acc-soft);
+}
+.btn.ghost {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--hairline);
+}
+.btn.ghost:hover { background: var(--surface-2); filter: none; }
+.btn.danger {
+  background: var(--neg);
+  color: #fff;
+  border-color: color-mix(in oklab, var(--neg) 70%, black);
+}
+
+/* Pulse for live dot */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
+.dot-pulse { animation: pulse-dot 1.6s ease-in-out infinite; }
+
+/* Focus ring */
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--acc);
+}
+
+/* No-motion */
+body.no-motion *,
+body.no-motion *::before,
+body.no-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+/* Sparkline area */
+.spark-area { fill: currentColor; opacity: 0.12; }
+.spark-line { fill: none; stroke: currentColor; }
+
+input, textarea, select, button { font-family: inherit; color: inherit; }
+
+/* Section header */
+.section-h {
+  display: flex; align-items: center; gap: 12px;
+  padding: 6px 0 14px;
+}
+.section-h .chev { color: var(--ink-mute); }
+.section-h h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.012em;
+  margin: 0;
+}
+.section-h .rule {
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, var(--hairline), transparent);
+}
+.section-h .meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}

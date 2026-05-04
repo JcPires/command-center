@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Command Centre</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="mask-icon" href="/favicon.svg" color="#5B6FFF" />
+    <meta name="theme-color" content="#0a0a12" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  </head>
+  <body>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("cc-theme");
+          var p = localStorage.getItem("cc-palette");
+          var d = localStorage.getItem("cc-density");
+          var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var theme = (t === "light" || t === "dark") ? t : (prefersDark ? "dark" : "light");
+          var palette = ["indigo","slate","mono","ocean","sunset","lavender","ember","arctic"].indexOf(p) >= 0 ? p : "indigo";
+          var density = (d === "compact" || d === "regular" || d === "comfy") ? d : "regular";
+          document.documentElement.setAttribute("data-theme", theme);
+          document.body.setAttribute("data-theme", theme);
+          document.body.setAttribute("data-palette", palette);
+          document.body.setAttribute("data-density", density);
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "dark");
+          document.body.setAttribute("data-theme", "dark");
+          document.body.setAttribute("data-palette", "indigo");
+          document.body.setAttribute("data-density", "regular");
+        }
+      })();
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

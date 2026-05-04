@@ -1,0 +1,46 @@
+# ─── Local config & secrets ────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ─── Python ────────────────────────────────────────────────────────────────
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ─── Node / Vite / TypeScript ──────────────────────────────────────────────
+ui/node_modules/
+ui/dist/
+ui/.vite/
+ui/*.tsbuildinfo
+ui/playwright-report/
+ui/test-results/
+
+# ─── Local data, logs, IPC ─────────────────────────────────────────────────
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+logs/
+.tmp/
+
+# ─── OS / IDE / editors ────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ─── Misc temp ─────────────────────────────────────────────────────────────
+*.log
+nohup.out
+.cache/
+.playwright-mcp/
