@@ -12,8 +12,8 @@
 L'installer est idempotent — on peut le rejouer sans risque :
 
 ```bash
-git clone <repo> claude-dashboard
-cd claude-dashboard
+git clone <repo> command-center
+cd command-center
 ./install.sh
 ```
 
@@ -81,7 +81,7 @@ Pour désactiver OTEL côté Claude Code, éditer `~/.claude/settings.json` et r
 Après installation, le dépôt ressemble à :
 
 ```
-claude-dashboard/
+command-center/
 ├── cc                          # script lanceur
 ├── install.sh
 ├── requirements.txt

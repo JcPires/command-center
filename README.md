@@ -28,8 +28,8 @@ Tableau de bord local pour Claude Code. Surveille tes sessions, tes coûts en to
 ## Démarrage rapide
 
 ```bash
-git clone <repo> claude-dashboard
-cd claude-dashboard
+git clone <repo> command-center
+cd command-center
 ./install.sh           # interactif ; ./install.sh --yes pour tout accepter
 ./cc start             # démarre le serveur sur :8765
 open http://127.0.0.1:8765
